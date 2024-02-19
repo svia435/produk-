@@ -32,7 +32,7 @@
   import { ambilDaftarProduk } from './main.js';
   
   $(document).ready(async function() {
-  let elemeDaftar = $("#daftar-produk > tbody");
+  let elemenDaftar = $("#daftar-produk > tbody");
   let daftarProduk = await ambilDaftarProduk();
   
   daftarProduk.forEach((data) => {
