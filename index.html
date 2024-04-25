@@ -11,7 +11,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="m-3">
   <h1>Daftar Produk</h1>
   
   <table class="table" id="daftar-produk">
@@ -21,6 +21,7 @@
         <th scope="col">Nama Produk</th>
         <th scope="col">Harga</th>
         <th scope="col">Stok</th>
+        <th scope="col">aksi</th>
       </tr>
     </thead>
     <tbody>
@@ -47,12 +48,22 @@
       '<td>' + data.nama +'</td>' +
       '<td>' + formatAngka(data.harga)  +'</td>' +
       '<td>' + data.stok + '</td>' +
+      '<td>' + '<button class="btn btn-danger tombol-hapus" data ="' + data.id + '">hapus</button>' +
+      '<img src="loader.gif" style="width: lem; display: none" id="' + data.id + '">'+
+      '</td>' +
       '</tr>'
       );
       nomor = nomor + 1;
+      
   });
-  
   $('#loader').hide();
+  
+  $('.tombol-hapus').click(async function() {
+    $(this).attr('disebled','disebled');
+    $('#' + $(this).attr('data')).show();
+    await hapusProduk($(this).attr('data'));
+    location.reload();
+  });
   
   });
   </script>
