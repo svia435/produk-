@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export async function ambilDaftarPembeli() {
-  const refDokumen = collection(db,"produk");
+  const refDokumen = collection(db,"pembeli");
   const kueri = query(refDokumen, orderBy("nama"));
   const cuplikanKueri = await getDocs(kueri);
   
@@ -49,7 +49,7 @@ export function formatAngka(x) {
 
 export async function  tambahPembeli(nama, alamat, noTlpn) {
   try {
-    const dokRef = await addDoc(collection(db, 'produk'),{
+    const dokRef = await addDoc(collection(db, 'pembeli'),{
       nama: nama,
       alamat: alamat,
       noTlpn: noTlpn
@@ -58,12 +58,12 @@ export async function  tambahPembeli(nama, alamat, noTlpn) {
   } catch (e) {
     Console.log('Gagal menambah pembeli' + e);
   }
-export async function hapuspembeli(docId)
+export async function hapusPembeli(docId)
 {
   await deleteDoc(doc(db,"Pembeli", docId));
 }
 
-export async function ubahpembeli(docId,nama, alamat, noTlpn) {
+export async function ubahPembeli(docId,nama, alamat, noTlpn) {
   await updateDoc(doc(db, "pembeli", docId),{
     nama: nama,
     alamat: alamat,
@@ -71,10 +71,10 @@ export async function ubahpembeli(docId,nama, alamat, noTlpn) {
   });
 }
   
-  export async function ambilpembeli(docid) {
+  export async function ambilPembeli(docid) {
     const docRef = await doc(db, "pembeli", docId);
     const docSnap = await getDoc(docRef);
     
-    return await docSnap.date();
+    return await docSnap.data();
   }
 }
