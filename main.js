@@ -58,5 +58,23 @@ export async function  tambahProduk(nama, harga, stok) {
   } catch (e) {
     Console.log('Gagal menambah produk' + e);
   }
+export async function hapusPembeli(docId)
+{
+  await deleteDoc(doc(db,"Pembeli", docId));
+}
 
+export async function ubahPembeli(docId,nama, alamat, noTlpn) {
+  await updateDoc(doc(db, "pembeli", docId),{
+    nama: nama,
+    alamat: alamat,
+    noTlpn: noTlpn
+  });
+}
+  
+  export async function ambilPembeli(docid) {
+    const docRef = await doc(db, "pembeli", docId);
+    const docSnap = await getDoc(docRef);
+    
+    return await docSnap.date();
+  }
 }
