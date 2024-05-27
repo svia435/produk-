@@ -26,8 +26,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function ambilDaftarPembeli() {
-  const refDokumen = collection(db,"pembeli");
+export async function ambilDaftarProduk() {
+  const refDokumen = collection(db,"produk");
   const kueri = query(refDokumen, orderBy("nama"));
   const cuplikanKueri = await getDocs(kueri);
   
@@ -36,8 +36,8 @@ export async function ambilDaftarPembeli() {
     hasil.push({  
       id: dok.id, 
     nama: dok.data().nama,
-    alamat: dok.data().alamat,
-    noTlpn: dok.data().noTlpn,
+    harga: dok.data().harga,
+    stok: dok.data().stok,
     });
   });
   return hasil;
@@ -47,34 +47,34 @@ export function formatAngka(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-export async function  tambahPembeli(nama, alamat, noTlpn) {
+export async function  tambahProduk(nama, alamat, noTlpn) {
   try {
-    const dokRef = await addDoc(collection(db, 'pembeli'),{
+    const dokRef = await addDoc(collection(db, 'produk'),{
       nama: nama,
-      alamat: alamat,
-      noTlpn: noTlpn
+      harga: harga,
+      stok: stok
     });
-    console.log('Berhasil menambah pembeli' + dokRef.id);
+    console.log('Berhasil menambah produk' + dokRef.id);
   } catch (e) {
-    Console.log('Gagal menambah pembeli' + e);
+    Console.log('Gagal menambah produk' + e);
   }
-export async function hapusPembeli(docId)
+}
+export async function hapusProduk(docId)
 {
-  await deleteDoc(doc(db,"Pembeli", docId));
+  await deleteDoc(doc(db,"Produk", docId));
 }
 
-export async function ubahPembeli(docId,nama, alamat, noTlpn) {
-  await updateDoc(doc(db, "pembeli", docId),{
+export async function ubahProduk(docId,nama, harga, stok) {
+  await updateDoc(doc(db, "produk", docId),{
     nama: nama,
-    alamat: alamat,
-    noTlpn: noTlpn
+    harga: harga,
+    stok: stok
   });
 }
   
-  export async function ambilPembeli(docid) {
-    const docRef = await doc(db, "pembeli", docId);
+  export async function ambilProduk(docid) {
+    const docRef = await doc(db, "produk", docId);
     const docSnap = await getDoc(docRef);
     
     return await docSnap.data();
   }
-}
